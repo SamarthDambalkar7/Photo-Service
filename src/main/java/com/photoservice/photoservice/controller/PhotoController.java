@@ -32,7 +32,7 @@ public class PhotoController {
     @Operation(summary = "add new photo object to db", description = "send a photo object with required properties and store the same to database")
     @PostMapping("/addnewphoto")
     public ResponseEntity<?> addNewPhoto(@RequestParam String userId, @RequestParam MultipartFile imageFile) {
-        
+
         return photoServiceImpl.addNewPhoto(userId, imageFile);
     }
 
@@ -53,7 +53,7 @@ public class PhotoController {
         String userId = photoServiceImpl.getUserDetailsByPhotoUrl(photoUrl.trim());
 
 
-        return restTemplate.getForObject("http://user-service/userphoto/getuserbyuserid?userId=" + userId, UserDto.class);
+        return restTemplate.getForObject("http://user-service/user/getuserbyuserid?userId=" + userId, UserDto.class);
 
     }
 

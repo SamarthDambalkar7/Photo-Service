@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.photoservice.photoservice.model.Photo;
 import com.photoservice.photoservice.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,23 +20,26 @@ public class PhotoServiceImpl implements PhotoService {
     @Autowired
     private PhotoRepository photoRepository;
 
-    private final Cloudinary cloudinary;
+//    private final Cloudinary cloudinary;
+//
+//    public PhotoServiceImpl(Cloudinary cloudinary) {
+//        this.cloudinary = cloudinary;
+//    }
 
-    public PhotoServiceImpl(Cloudinary cloudinary) {
-        this.cloudinary = cloudinary;
-    }
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
-    public String addNewPhoto(String userId, MultipartFile imageFile) {
+    public ResponseEntity<?> addNewPhoto(String userId, MultipartFile imageFile) {
         try {
             Map uploadResult = cloudinary.uploader().upload(imageFile.getBytes(), ObjectUtils.emptyMap());
 
             String photoId = UUID.randomUUID().toString();
             Photo photo = new Photo(photoId, userId, uploadResult.get("secure_url").toString());
             photoRepository.save(photo);
-            return (String) uploadResult.get("secure_url");
+            return ResponseEntity.ok(uploadResult.get("secure_url"));
         } catch (IOException e) {
-            return "Image not Uploaded";
+            return ResponseEntity.badRequest().build();
         }
 
     }

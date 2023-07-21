@@ -20,18 +20,20 @@ public class PhotoController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final PhotoServiceImpl photoServiceImpl;
+//    private final PhotoServiceImpl photoServiceImpl;
+//
+//    public PhotoController(PhotoServiceImpl photoServiceImpl) {
+//        this.photoServiceImpl = photoServiceImpl;
+//    }
 
-    public PhotoController(PhotoServiceImpl photoServiceImpl) {
-        this.photoServiceImpl = photoServiceImpl;
-    }
+    @Autowired
+    private PhotoServiceImpl photoServiceImpl;
 
     @Operation(summary = "add new photo object to db", description = "send a photo object with required properties and store the same to database")
     @PostMapping("/addnewphoto")
-    public ResponseEntity<String> addNewPhoto(@RequestParam String userId, @RequestParam MultipartFile imageFile) {
-
-        photoServiceImpl.addNewPhoto(userId, imageFile);
-        return ResponseEntity.ok("Image Uploaded Successfully");
+    public ResponseEntity<?> addNewPhoto(@RequestParam String userId, @RequestParam MultipartFile imageFile) {
+        
+        return photoServiceImpl.addNewPhoto(userId, imageFile);
     }
 
     @GetMapping("/getphotosbyuserid")

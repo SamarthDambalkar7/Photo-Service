@@ -4,6 +4,7 @@ import com.photoservice.photoservice.dto.UserDto;
 import com.photoservice.photoservice.service.PhotoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -20,11 +21,8 @@ public class PhotoController {
     @Autowired
     private RestTemplate restTemplate;
 
-//    private final PhotoServiceImpl photoServiceImpl;
-//
-//    public PhotoController(PhotoServiceImpl photoServiceImpl) {
-//        this.photoServiceImpl = photoServiceImpl;
-//    }
+    @Value("${user.service.primary.endpoint}")
+    private String userService;
 
     @Autowired
     private PhotoServiceImpl photoServiceImpl;
@@ -32,6 +30,7 @@ public class PhotoController {
     @Operation(summary = "add new photo object to db", description = "send a photo object with required properties and store the same to database")
     @PostMapping("/addnewphoto")
     public ResponseEntity<?> addNewPhoto(@RequestParam String userId, @RequestParam MultipartFile imageFile) {
+        restTemplate.put(userService + "/incrementphotocount?userId=" + userId, null, ResponseEntity.class);
 
         return photoServiceImpl.addNewPhoto(userId, imageFile);
     }
@@ -53,7 +52,7 @@ public class PhotoController {
         String userId = photoServiceImpl.getUserDetailsByPhotoUrl(photoUrl.trim());
 
 
-        return restTemplate.getForObject("http://user-service/user/getuserbyuserid?userId=" + userId, UserDto.class);
+        return restTemplate.getForObject(userService + "/getuserbyuserid?userId=" + userId, UserDto.class);
 
     }
 

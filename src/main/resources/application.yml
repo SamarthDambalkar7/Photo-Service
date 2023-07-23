@@ -7,6 +7,14 @@ spring:
     activate:
       on-profile: default
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: secret
+    url: jdbc:mysql://13.41.110.229:3306/somedb
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 eureka:
   client:
@@ -15,12 +23,22 @@ eureka:
     service-url:
       defaultZone: http://photo-discovery-server-container:8761/eureka
 
+
 ---
 
 spring:
   config:
     activate:
       on-profile: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: secret
+    url: jdbc:mysql://13.41.110.229:3306/devdb
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 eureka:
   client:

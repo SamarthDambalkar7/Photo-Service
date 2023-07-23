@@ -1,12 +1,13 @@
 package com.photoservice.photoservice.service;
 
-import java.util.LinkedList;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.LinkedList;
 
 public interface PhotoService {
 
-    String addNewPhoto(String userId, MultipartFile imageFile);
+    ResponseEntity<?> addNewPhoto(String userId, MultipartFile imageFile);
 
     LinkedList<String> getAllPhotos(String userId);
 

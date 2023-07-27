@@ -20,11 +20,6 @@ public class PhotoServiceImpl implements PhotoService {
     @Autowired
     private PhotoRepository photoRepository;
 
-//    private final Cloudinary cloudinary;
-//
-//    public PhotoServiceImpl(Cloudinary cloudinary) {
-//        this.cloudinary = cloudinary;
-//    }
 
     @Autowired
     private Cloudinary cloudinary;

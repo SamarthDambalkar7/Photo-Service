@@ -1,6 +1,7 @@
 package com.photoservice.photoservice.controller;
 
 import com.photoservice.photoservice.dto.UserDTO;
+import com.photoservice.photoservice.model.Comment;
 import com.photoservice.photoservice.service.PhotoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,22 @@ public class PhotoController {
 
     }
 
+    @PostMapping("/comment/add")
+    public ResponseEntity<?> addNewComment(@RequestParam String photoUrl, @RequestBody Comment comment) {
+
+        photoServiceImpl.addNewComment(photoUrl, comment);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/like")
+    public ResponseEntity<?> likePhoto(@RequestParam String photoUrl, @RequestParam String liker) {
+        photoServiceImpl.likePhoto(photoUrl, liker);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/unlike")
+    public ResponseEntity<?> unLikePhoto(@RequestParam String photoUrl, @RequestParam String unLiker) {
+        photoServiceImpl.unLikePhoto(photoUrl, unLiker);
+        return ResponseEntity.ok().build();
+    }
 }

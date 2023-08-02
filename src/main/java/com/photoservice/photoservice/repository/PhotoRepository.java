@@ -1,11 +1,10 @@
 package com.photoservice.photoservice.repository;
 
-import java.util.LinkedList;
-
+import com.photoservice.photoservice.model.Photo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.photoservice.photoservice.model.Photo;
+import java.util.LinkedList;
 
 public interface PhotoRepository extends JpaRepository<Photo, String> {
 
@@ -17,5 +16,8 @@ public interface PhotoRepository extends JpaRepository<Photo, String> {
 
     @Query("Select p.userId from Photo p WHERE p.photoUrl = :photoUrl")
     String getUserIdByPhotoUrl(String photoUrl);
+
+    @Query("SELECT p FROM Photo p WHERE p.photoUrl = :photoUrl")
+    Photo findByPhotoUrl(String photoUrl);
 
 }

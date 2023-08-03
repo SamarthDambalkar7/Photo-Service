@@ -89,4 +89,10 @@ public class PhotoServiceImpl implements PhotoService {
         photoRepository.save(photo);
     }
 
+    @Override
+    public List<Comment> getAllComments(String photoUrl) {
+
+        return commentRepository.findByPhoto_PhotoUrl(photoUrl);
+    }
+
 }

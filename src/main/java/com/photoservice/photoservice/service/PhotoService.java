@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public interface PhotoService {
 
@@ -21,4 +22,6 @@ public interface PhotoService {
     void likePhoto(String photoUrl, String liker);
 
     void unLikePhoto(String photoUrl, String unLiker);
+
+    List<Comment> getAllComments(String photoUrl);
 }

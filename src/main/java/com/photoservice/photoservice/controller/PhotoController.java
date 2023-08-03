@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/photo")
 @CrossOrigin("*")
@@ -75,5 +77,11 @@ public class PhotoController {
     public ResponseEntity<?> unLikePhoto(@RequestParam String photoUrl, @RequestParam String unLiker) {
         photoServiceImpl.unLikePhoto(photoUrl, unLiker);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/comments")
+    public ResponseEntity<?> getAllComments(@RequestParam String photoUrl) {
+        List<Comment> comments = photoServiceImpl.getAllComments(photoUrl);
+        return ResponseEntity.ok(comments);
     }
 }
